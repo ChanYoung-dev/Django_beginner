@@ -13,21 +13,21 @@ def index(request):
     }
     # django.shortcuts의 render 기능때문에
     # return HttpResponse(template.render(context, request))
-    return render(request, 'index.html', context)
+    return render(request, 'first/index.html', context)
 
 
 def select(request):
     context = {
         'number': 4
     }
-    return render(request, 'select.html', context)
+    return render(request, 'first/select.html', context)
 
 
 def result(request):
     context = {
         'numbers': [1, 2, 3, 4]
     }
-    return render(request, 'result.html', context)
+    return render(request, 'first/result.html', context)
 
 
 
