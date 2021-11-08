@@ -18,7 +18,9 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('first.urls'), name='index'), ## views 파일의 index 메소드에 연결
+    # path('', include('first.urls'), name='index'), ## views 파일의 index 메소드에 연결
+    path('first/', include('first.urls')),
+    path('second/', include('second.urls')),
     path('admin/', admin.site.urls),
 ]
 
