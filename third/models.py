@@ -31,3 +31,49 @@ Restaurant.objects.order_by('-created_at')[1:3].values()
 <QuerySet [{'id': 2, 'name': 'Korean Food', 'address': 'Gangbuk', 'created_at': datetime.datetime(2018, 12, 5, 22, 21, 52, 35871, tzinfo=<UTC>), 'updated_at': datetime.datetime(2018, 12, 5, 22, 55, 56, 81772, tzinfo=<UTC>)}, {'id': 1, 'name': 'Deli Shop', 'address': 'Gangnam', 'created_at': datetime.datetime(2018, 12, 5, 22, 18, 34, 950381, tzinfo=<UTC>), 'updated_at': datetime.datetime(2018, 12, 5, 22, 55, 35, 384595, tzinfo=<UTC>)}]>
 
 '''
+
+'''
+Column(Field) Lookup
+
+Filter 조건을 더 잘 사용하면 좀 더 복잡한 조건도 조회할 수 있습니다. 이런식으로 제공되는 것을 django orm의 field lookup이라고 하는데, 사용해봅시다.
+
+기본적으로 Field lookup은 다음과 같이 사용합니다.
+Restaurant.objects.filter(name__exact=’Korean Food’)
+
+
+위와 같이 filter, exclude나, get 메소드 내에 검색을 원하는 필드명과 field lookup을 붙여서 값을 전달합니다.
+(형태: {field명}__{조건 키워드(lookup type)})
+
+쟝고 쉘을 시작하여 다음의 코드들을 실행해봅시다.
+(python manage.py shell)
+Contains: 특정 키워드가 포함된 레코드를 조회
+>> from third.models import Restaurant
+>> Restaurant.objects.filter(name__contains=’Korea’).values()
+
+
+Exact: 특정 키워드랑 정확하게 일치하는 레코드 조회
+>> Restaurant.objects.filter(name__contains=’Korean Food’).values()
+
+
+Gt, Gte, Lte, Lt: 더 크거나, 더 크거나 같거나, 더 작거나 같거나, 더 작거나한 레코드를 조회
+>> Restaurant.objects.filter(created_at__lt='2018-01-01 00:00:00').values()
+>> Restaurant.objects.filter(created_at__gt='2018-01-01 00:00:00').values()
+
+
+Startswith, Endswith: 특정 문자열로 시작하거나 종료되는 레코드를 조회
+>> Restaurant.objects.filter(name__startswith='Korea').values()
+>> Restaurant.objects.filter(name__endswith='Food').values()
+
+
+In: 여러 값을 한 번에 검색에 조건으로 걸 때 사용
+>> Restaurant.objects.filter(id__in=[1,3]).values()
+
+
+Range: 특정 값 사이의 레코드를 조회
+>> import datetime
+>> start_date = datetime.datetime(2018,12,3,0,0,0)
+>> end_date = datetime.datetime(2018,12,8,0,0,0)
+>> Restaurant.objects.filter(created_at__range=(start_date, end_date)).values()
+
+
+'''
