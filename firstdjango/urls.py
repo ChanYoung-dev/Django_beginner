@@ -21,6 +21,7 @@ urlpatterns = [
     # path('', include('first.urls'), name='index'), ## views 파일의 index 메소드에 연결
     path('first/', include('first.urls')),
     path('second/', include('second.urls')),
+    path('third/', include('third.urls')),  # third 웹 앱의 urls.py를 연결
     path('admin/', admin.site.urls),
 ]
 
