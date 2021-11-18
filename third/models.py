@@ -77,3 +77,43 @@ Range: 특정 값 사이의 레코드를 조회
 
 
 '''
+
+'''
+데이터 수정/삭제
+
+UPDATE: 수정하기
+우리가 이미 배운 데이터를 조회하는 방식을 써서 원하는 데이터를 가져온 후에 속성 값을 변경하고 데이터를 추가했을 때 처럼 save를 호출하면 수정이 완료됩니다.
+
+>> item = Restaurant.objects.get(pk=1)
+>> item.name 
+‘Deli Shop’
+>> item.name = ‘My Shop’
+>> item.save() # save를 호출해야 실제로 저장됩니다.
+
+
+save를 호출할 때 데이터를 추가하는 INSERT인지, 데이터를 수정하는 UPDATE인지 어떻게 구분할까요?
+모델의 인스턴스에 id (primary key) 값이 지정되어 있으면 save를 호출 시 UPDATE로 인식하고 수행합니다.
+만약 UPDATE에 실패했으면, 해당 id에 해당하는 레코드가 존재하지 않는 것이므로 새로운 값을 INSERT합니다.
+
+>>> new_item = Restaurant() # 새로운 모델의 인스턴스를 생성
+>>> new_item
+<Restaurant: Restaurant object (None)>
+>>> new_item.name = 'My Shop 2'
+>>> new_item.address = 'Yeoksam'
+>>> new_item.id = 1 # id를 지정 (primary key) 예전에 My Shop으로 이름을 지정한 레코드가 선택된다.
+>>> new_item.created_at = datetime.datetime.now()
+>>> new_item.updated_at = datetime.datetime.now()
+>>> new_item.save() # update가 이루어 진다.
+
+
+
+DELETE: 삭제하기
+
+삭제는 조회한 레코드(모델의 인스턴스)에서 delete를 메소드를 호출하면 됩니다.
+
+>>> item.delete()
+(1, {'third.Restaurant': 1})
+>>> Restaurant.objects.all().values()
+
+
+'''
