@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Third</title>
-</head>
-<body>
+{% extends 'third/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
     {% for item in restaurants %}
-    <div>
-        <h4>{{ item.name }}</h4>
-        <p>
-            {{ item.address }}
-        </p>
+    <div class="row restaurant-item" style="margin:20px auto;">
+        <div class="col-sm-12">
+            <div class="card border-secondary">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ item.address }}</h6>
+                <p class="card-text">음식점의 설명이 들어갑니다.</p>
+                <a href="#" class="card-link">자세히 보기</a>
+                <a href="#" class="card-link">수정하기</a>
+              </div>
+            </div>
+        </div>
     </div>
     {% endfor %}
-</body>
-</html>
+</div>
+{% endblock %}
