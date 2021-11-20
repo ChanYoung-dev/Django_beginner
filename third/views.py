@@ -38,7 +38,15 @@ def update(request):
     elif 'id' in request.GET:
         # item = Restaurant.objects.get(pk=request.GET.get('id')) #http~third/update/?id=2 이렇게 값이 입력됐다고 가정.
         item = get_object_or_404(Restaurant, pk=request.GET.get('id'))  # 이렇게 하면 id가 없을시 404페이지가 띄어진다
-        form = RestaurantForm(instance=item)
+        form = RestaurantForm(instance=item) #From에 id를 통해 get한 item 의 내용이 들어간다.
         return render(request, 'third/update.html', {'form': form})
+
+    return HttpResponseRedirect('/third/list/')  # 리스트 화면으로 이동합니다.
+
+#하나의 객체만 보여주기
+def detail(request):
+    if 'id' in request.GET:
+        item = get_object_or_404(Restaurant, pk=request.GET.get('id'))
+        return render(request, 'third/detail.html', {'item': item})
 
     return HttpResponseRedirect('/third/list/')  # 리스트 화면으로 이동합니다.
