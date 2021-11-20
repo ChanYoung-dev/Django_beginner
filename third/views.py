@@ -3,6 +3,7 @@ from third.models import Restaurant
 from django.core.paginator import Paginator
 from third.forms import RestaurantForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 
 
 
@@ -27,3 +28,17 @@ def create(request):
     form = RestaurantForm()
     return render(request, 'third/create.html', {'form': form})
 
+def update(request):
+    if request.method == 'POST' and 'id' in request.POST:
+        # item = Restaurant.objects.get(pk=request.POST.get('id'))
+        item = get_object_or_404(Restaurant, pk=request.POST.get('id')) # 이렇게 하면 id가 없을시 404페이지가 띄어진다
+        form = RestaurantForm(request.POST, instance=item)  # NOTE: instance 인자(수정대상) 지정
+        if form.is_valid():
+            item = form.save()
+    elif 'id' in request.GET:
+        # item = Restaurant.objects.get(pk=request.GET.get('id')) #http~third/update/?id=2 이렇게 값이 입력됐다고 가정.
+        item = get_object_or_404(Restaurant, pk=request.GET.get('id'))  # 이렇게 하면 id가 없을시 404페이지가 띄어진다
+        form = RestaurantForm(instance=item)
+        return render(request, 'third/update.html', {'form': form})
+
+    return HttpResponseRedirect('/third/list/')  # 리스트 화면으로 이동합니다.
