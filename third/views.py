@@ -45,8 +45,16 @@ def update(request):
 
 #하나의 객체만 보여주기
 def detail(request):
-    if 'id' in request.GET:
+    if 'id' in request.GET: #http~third/update/?id=2 이렇게 값이 입력됐다면
         item = get_object_or_404(Restaurant, pk=request.GET.get('id'))
         return render(request, 'third/detail.html', {'item': item})
 
     return HttpResponseRedirect('/third/list/')  # 리스트 화면으로 이동합니다.
+
+def delete(request):
+    if 'id' in request.GET: #http~third/update/?id=2 이렇게 값이 입력됐다면
+        item = get_object_or_404(Restaurant, pk=request.GET.get('id'))
+        item.delete()
+
+    return HttpResponseRedirect('/third/list/')
+
