@@ -58,12 +58,22 @@ def detail(request, id):
 
     return HttpResponseRedirect('/third/list/')  # 리스트 화면으로 이동합니다.
 
-def delete(request):
+
+def delete(request, id):
+    '''
     if 'id' in request.GET: #http~third/update/?id=2 이렇게 값이 입력됐다면
         item = get_object_or_404(Restaurant, pk=request.GET.get('id'))
         item.delete()
 
     return HttpResponseRedirect('/third/list/')
+    '''
+    item = get_object_or_404(Restaurant, pk=id)
+    if request.method == 'POST' and 'password' in request.POST:
+        if item.password == request.POST.get('password') or item.password is None:
+            item.delete()
+            return redirect('list')  # 리스트 화면으로 이동합니다.
+        return redirect('restaurant-detail', id=id) # 비밀번호가 입력되지 않으면 상세페이지로 되돌아감
+    return render(request, 'third/delete.html', {'item': item})
 
 
 def review_create(request, restaurant_id):
