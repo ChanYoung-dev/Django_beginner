@@ -3,11 +3,13 @@ from django.core.paginator import Paginator
 from third.forms import RestaurantForm, ReviewForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Count, Avg
 
 
 
 def list(request):
-    restaurants = Restaurant.objects.all()
+    # restaurants = Restaurant.objects.all()
+    restaurants = Restaurant.objects.all().annotate(reviews_count=Count('review')).annotate(average_point=Avg('review__point'))
     paginator = Paginator(restaurants, 5)  # 한 페이지에 5개씩 표시
 
     page = request.GET.get('page')  # query params에서 page 데이터를 가져옴
