@@ -73,3 +73,11 @@ def review_create(request, restaurant_id):
     return render(request, 'third/review_create.html', {'form': form, 'item':item})
 
 
+def review_delete(request, restaurant_id, review_id):
+    item = get_object_or_404(Review, pk=review_id)
+    item.delete()
+
+    return redirect('restaurant-detail', id=restaurant_id)  # 전 화면으로 이동합니다.
+
+
+
