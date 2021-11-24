@@ -1,6 +1,6 @@
 from third.models import Restaurant, Review
 from django.core.paginator import Paginator
-from third.forms import RestaurantForm, ReviewForm
+from third.forms import RestaurantForm, ReviewForm, UpdateRestaurantForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Count, Avg
@@ -33,8 +33,11 @@ def update(request):
     if request.method == 'POST' and 'id' in request.POST:
         # item = Restaurant.objects.get(pk=request.POST.get('id'))
         item = get_object_or_404(Restaurant, pk=request.POST.get('id')) # 이렇게 하면 id가 없을시 404페이지가 띄어진다
-        form = RestaurantForm(request.POST, instance=item)  # NOTE: instance 인자(수정대상) 지정
-        if form.is_valid():
+        password = request.POST.get("password", "")
+        # form = RestaurantForm(request.POST, instance=item)  # NOTE: instance 인자(수정대상) 지정
+        form = UpdateRestaurantForm(request.POST, instance=item)  # NOTE: instance 인자(수정대상) 지정
+        # if form.is_valid():
+        if form.is_valid() and password == item.password:  # 비밀번호 검증 추가
             item = form.save()
     elif 'id' in request.GET:
         # item = Restaurant.objects.get(pk=request.GET.get('id')) #http~third/update/?id=2 이렇게 값이 입력됐다고 가정.
