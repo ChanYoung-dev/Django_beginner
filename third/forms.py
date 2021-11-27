@@ -65,4 +65,4 @@ class RestaurantForm(ModelForm):
 class UpdateRestaurantForm(RestaurantForm):
     class Meta:
         model = Restaurant
-        exclude = ['password']
+        exclude = ['password'] # password는 데이터베이스에 업데이트되지않는다.

@@ -5,6 +5,8 @@ class Restaurant(models.Model): # Restaurant 라는 상점을 나타내는 모�
     name = models.CharField(max_length=30)  # 이름
     address = models.CharField(max_length=200)  # 주소
 
+    #기존에 데이터베이스에 인스턴스들이 있는데 변수를 추가하려면 default값을 주어야한다. 여기서 default는 null값으로 하였다.
+    # null 값을 허용한다. 원래는 허용 X이고 반드시 값들이 채워져야 한다.
     password = models.CharField(max_length=20, default=None, null=True)
     image = models.CharField(max_length=500, default=None, null=True)
 
@@ -13,7 +15,7 @@ class Restaurant(models.Model): # Restaurant 라는 상점을 나타내는 모�
 
 
 class Review(models.Model):
-    point = models.IntegerField()
+    point = models.IntegerField(default=0)
     comment = models.CharField(max_length=500)
 
     # 식당 모델과의 릴레이션 정의,

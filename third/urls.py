@@ -7,7 +7,8 @@ urlpatterns = [
     path('create/', views.create, name='restaurant-create'),
     path('update/', views.update, name='restaurant-update'),
     # path('detail/', views.detail, name='restaurant-detail'),
-    path('restaurant/<int:id>/', views.detail, name='restaurant-detail'),
+    path('restaurant/<int:id>/', views.detail, name='restaurant-detail'), #path parameter 사용, 이러면 view.detail 함수에 id를 \
+    # 파라미터에 넣을수있따
     # path('delete/', views.delete, name='restaurant-delete'),
     path('restaurant/<int:id>/delete/', views.delete, name='restaurant-delete'),
     path('restaurant/<int:restaurant_id>/review/create/', views.review_create, name='review-create'),

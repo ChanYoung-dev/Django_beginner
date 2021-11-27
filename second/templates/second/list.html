@@ -10,8 +10,10 @@
         <h4>{{ item.title }}</h4>
         <p>
             {{ item.content }}
+            {{ item.created_at }}
         </p>
     </div>
     {% endfor %}
+    <a href="{% url 'create' %}"> 데이터 생성하기 </a>
 </body>
 </html>

@@ -29,7 +29,7 @@
                     </a>
                   </div>
                   <div class="card-body">
-                    <p class="card-text">{{ review.comment }}</p>
+                    <p class="card-text">{{ review.comment }} <p>{{ review.created_at|date:"Y년 m월 d일" }}</p></p>
                   </div>
                 </div>
             {% endfor %}
